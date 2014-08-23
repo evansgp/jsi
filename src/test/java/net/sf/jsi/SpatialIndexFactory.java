@@ -20,18 +20,10 @@ package net.sf.jsi;
 
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import net.sf.jsi.SpatialIndex;
-
 /**
  * Factory class used to create instances of spatial indexes
  */
 public class SpatialIndexFactory {
-  
-  private final static Logger log = 
-    LoggerFactory.getLogger(SpatialIndexFactory.class);
 
   public static SpatialIndex newInstance(String type) {
     return newInstance(type, null);
@@ -44,11 +36,11 @@ public class SpatialIndexFactory {
       si = (SpatialIndex) Class.forName(className).newInstance();
       si.init(props);
     } catch (ClassNotFoundException cnfe) {
-      log.error(cnfe.toString());
+      //log.error(cnfe.toString());
     } catch (IllegalAccessException iae) {
-      log.error(iae.toString());    
+      //log.error(iae.toString());
     } catch (InstantiationException ie) {
-      log.error(ie.toString());   
+      //log.error(ie.toString());
     }
     
     return si;

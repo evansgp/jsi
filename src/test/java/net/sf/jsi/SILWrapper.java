@@ -22,9 +22,6 @@ import gnu.trove.procedure.TIntProcedure;
 
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import sil.rtree.RTree;
 import sil.spatialindex.IData;
 import sil.spatialindex.INode;
@@ -42,8 +39,6 @@ import sil.storagemanager.PropertySet;
  * Used to generate test results and performance comparisons.
  */
 public class SILWrapper implements SpatialIndex {
-  
-  private static final Logger log =  LoggerFactory.getLogger(SILWrapper.class);
   
   private IStorageManager storageManager = null; 
   private ISpatialIndex tree = null;
@@ -91,7 +86,7 @@ public class SILWrapper implements SpatialIndex {
     } else {
       // default
       if (!strTreeVariant.equalsIgnoreCase("Rstar")) {
-        log.error("Property key TreeVariant: invalid value " + strTreeVariant + ", defaulting to Rstar");
+       //log.error("Property key TreeVariant: invalid value " + strTreeVariant + ", defaulting to Rstar");
       }
       intTreeVariant = new Integer(sil.spatialindex.SpatialIndex.RtreeVariantRstar); 
     }

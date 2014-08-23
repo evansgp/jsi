@@ -28,9 +28,6 @@ import gnu.trove.stack.array.TIntArrayStack;
 import java.io.Serializable;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import net.sf.jsi.BuildProperties;
 import net.sf.jsi.Point;
 import net.sf.jsi.Rectangle;
@@ -54,8 +51,6 @@ import net.sf.jsi.SpatialIndex;
  */
 public class RTree implements SpatialIndex, Serializable {
   private static final long serialVersionUID = 5946232781609920309L;
-  private static final Logger log = LoggerFactory.getLogger(RTree.class);
-  private static final Logger deleteLog = LoggerFactory.getLogger(RTree.class.getName() + "-delete");
 
   // parameters of the tree
   private final static int DEFAULT_MAX_NODE_ENTRIES = 50;
@@ -140,13 +135,13 @@ public class RTree implements SpatialIndex, Serializable {
       // The node splitting algorithm will work with only 2 entries
       // per node, but will be inefficient.
       if (maxNodeEntries < 2) {
-        log.warn("Invalid MaxNodeEntries = " + maxNodeEntries + " Resetting to default value of " + DEFAULT_MAX_NODE_ENTRIES);
+        //log.warn("Invalid MaxNodeEntries = " + maxNodeEntries + " Resetting to default value of " + DEFAULT_MAX_NODE_ENTRIES);
         maxNodeEntries = DEFAULT_MAX_NODE_ENTRIES;
       }
 
       // The MinNodeEntries must be less than or equal to (int) (MaxNodeEntries / 2)
       if (minNodeEntries < 1 || minNodeEntries > maxNodeEntries / 2) {
-        log.warn("MinNodeEntries must be between 1 and MaxNodeEntries / 2");
+        //log.warn("MinNodeEntries must be between 1 and MaxNodeEntries / 2");
         minNodeEntries = maxNodeEntries / 2;
       }
     }
@@ -161,16 +156,12 @@ public class RTree implements SpatialIndex, Serializable {
     Node root = new Node(rootNodeId, 1, maxNodeEntries);
     nodeMap.put(rootNodeId, root);
 
-    log.debug("init() " + " MaxNodeEntries = " + maxNodeEntries + ", MinNodeEntries = " + minNodeEntries);
   }
 
   /**
    * @see net.sf.jsi.SpatialIndex#add(Rectangle, int)
    */
   public void add(Rectangle r, int id) {
-    if (log.isDebugEnabled()) {
-      log.debug("Adding rectangle " + r + ", id " + id);
-    }
 
     add(r.minX, r.minY, r.maxX, r.maxY, id, 1);
 
@@ -246,8 +237,7 @@ public class RTree implements SpatialIndex, Serializable {
   	  int startIndex = parentsEntry.peek() + 1;
 
       if (!n.isLeaf()) {
-        deleteLog.debug("searching node " + n.nodeId + ", from index " + startIndex);
-	  	  boolean contains = false;
+      	boolean contains = false;
         for (int i = startIndex; i < n.entryCount; i++) {
 	  	    if (Rectangle.contains(n.entriesMinX[i], n.entriesMinY[i], n.entriesMaxX[i], n.entriesMaxY[i],
                                  r.minX, r.minY, r.maxX, r.maxY)) {
@@ -592,14 +582,6 @@ public class RTree implements SpatialIndex, Serializable {
 
     // debug code
     float initialArea = 0;
-    if (log.isDebugEnabled()) {
-      float unionMinX = Math.min(n.mbrMinX, newRectMinX);
-      float unionMinY = Math.min(n.mbrMinY, newRectMinY);
-      float unionMaxX = Math.max(n.mbrMaxX, newRectMaxX);
-      float unionMaxY = Math.max(n.mbrMaxY, newRectMaxY);
-
-      initialArea = (unionMaxX - unionMinX) * (unionMaxY - unionMinY);
-    }
 
     System.arraycopy(initialEntryStatus, 0, entryStatus, 0, maxNodeEntries);
 
@@ -655,20 +637,12 @@ public class RTree implements SpatialIndex, Serializable {
     if (INTERNAL_CONSISTENCY_CHECKING) {
       Rectangle nMBR = new Rectangle(n.mbrMinX, n.mbrMinY, n.mbrMaxX, n.mbrMaxY);
       if (!nMBR.equals(calculateMBR(n))) {
-        log.error("Error: splitNode old node MBR wrong");
+        //log.error("Error: splitNode old node MBR wrong");
       }
       Rectangle newNodeMBR = new Rectangle(newNode.mbrMinX, newNode.mbrMinY, newNode.mbrMaxX, newNode.mbrMaxY);
       if (!newNodeMBR.equals(calculateMBR(newNode))) {
-        log.error("Error: splitNode new node MBR wrong");
+        //log.error("Error: splitNode new node MBR wrong");
       }
-    }
-
-    // debug code
-    if (log.isDebugEnabled()) {
-      float newArea = Rectangle.area(n.mbrMinX, n.mbrMinY, n.mbrMaxX, n.mbrMaxY) +
-                      Rectangle.area(newNode.mbrMinX, newNode.mbrMinY, newNode.mbrMaxX, newNode.mbrMaxY);
-      float percentageIncrease = (100 * (newArea - initialArea)) / initialArea;
-      log.debug("Node " + n.nodeId + " split. New area increased by " + percentageIncrease + "%");
     }
 
     return newNode;
@@ -696,10 +670,6 @@ public class RTree implements SpatialIndex, Serializable {
     float mbrLenX = n.mbrMaxX - n.mbrMinX;
     float mbrLenY = n.mbrMaxY - n.mbrMinY;
 
-    if (log.isDebugEnabled()) {
-      log.debug("pickSeeds(): NodeId = " + n.nodeId);
-    }
-
     float tempHighestLow = newRectMinX;
     int tempHighestLowIndex = -1; // -1 indicates the new rectangle is the seed
 
@@ -724,13 +694,7 @@ public class RTree implements SpatialIndex, Serializable {
       // dimension
       float normalizedSeparation = mbrLenX == 0 ? 1 : (tempHighestLow - tempLowestHigh) / mbrLenX;
       if (normalizedSeparation > 1 || normalizedSeparation < -1) {
-        log.error("Invalid normalized separation X");
-      }
-
-      if (log.isDebugEnabled()) {
-              log.debug("Entry " + i + ", dimension X: HighestLow = " + tempHighestLow +
-                        " (index " + tempHighestLowIndex + ")" + ", LowestHigh = " +
-                        tempLowestHigh + " (index " + tempLowestHighIndex + ", NormalizedSeparation = " + normalizedSeparation);
+        //log.error("Invalid normalized separation X");
       }
 
       // PS3 [Select the most extreme pair] Choose the pair with the greatest
@@ -769,13 +733,7 @@ public class RTree implements SpatialIndex, Serializable {
       // dimension
       float normalizedSeparation = mbrLenY == 0 ? 1 : (tempHighestLow - tempLowestHigh) / mbrLenY;
       if (normalizedSeparation > 1 || normalizedSeparation < -1) {
-        log.error("Invalid normalized separation Y");
-      }
-
-      if (log.isDebugEnabled()) {
-        log.debug("Entry " + i + ", dimension Y: HighestLow = " + tempHighestLow +
-                  " (index " + tempHighestLowIndex + ")" + ", LowestHigh = " +
-                  tempLowestHigh + " (index " + tempLowestHighIndex + ", NormalizedSeparation = " + normalizedSeparation);
+        //log.error("Invalid normalized separation Y");
       }
 
       // PS3 [Select the most extreme pair] Choose the pair with the greatest
@@ -856,15 +814,11 @@ public class RTree implements SpatialIndex, Serializable {
 
     maxDifference = Float.NEGATIVE_INFINITY;
 
-    if (log.isDebugEnabled()) {
-      log.debug("pickNext()");
-    }
-
     for (int i = 0; i < maxNodeEntries; i++) {
       if (entryStatus[i] == ENTRY_STATUS_UNASSIGNED) {
 
         if (n.ids[i] == -1) {
-          log.error("Error: Node " + n.nodeId + ", entry " + i + " is null");
+          //log.error("Error: Node " + n.nodeId + ", entry " + i + " is null");
         }
 
         float nIncrease = Rectangle.enlargement(n.mbrMinX, n.mbrMinY, n.mbrMaxX, n.mbrMaxY,
@@ -891,10 +845,6 @@ public class RTree implements SpatialIndex, Serializable {
             nextGroup = 1;
           }
           maxDifference = difference;
-        }
-        if (log.isDebugEnabled()) {
-          log.debug("Entry " + i + " group0 increase = " + nIncrease + ", group1 increase = " + newNodeIncrease +
-                    ", diff = " + difference + ", MaxDiff = " + maxDifference + " (entry " + next + ")");
         }
       }
     }
@@ -1050,7 +1000,7 @@ public class RTree implements SpatialIndex, Serializable {
     // CL2 [Leaf check] If N is a leaf, return N
     while (true) {
       if (n == null) {
-        log.error("Could not get root node (" + rootNodeId + ")");  
+        //log.error("Could not get root node (" + rootNodeId + ")");
       }
    
       if (n.level == level) {
@@ -1106,9 +1056,9 @@ public class RTree implements SpatialIndex, Serializable {
       int entry = parentsEntry.pop();
 
       if (parent.ids[entry] != n.nodeId) {
-        log.error("Error: entry " + entry + " in node " +
-             parent.nodeId + " should point to node " +
-             n.nodeId + "; actually points to node " + parent.ids[entry]);
+        //log.error("Error: entry " + entry + " in node " +
+        //     parent.nodeId + " should point to node " +
+        //     n.nodeId + "; actually points to node " + parent.ids[entry]);
       }
 
       if (parent.entriesMinX[entry] != n.mbrMinX ||
@@ -1166,7 +1116,7 @@ public class RTree implements SpatialIndex, Serializable {
     Node n = getNode(nodeId);
 
     if (n == null) {
-      log.error("Error: Could not read node " + nodeId);
+      //log.error("Error: Could not read node " + nodeId);
       return false;
     }
 
@@ -1174,13 +1124,13 @@ public class RTree implements SpatialIndex, Serializable {
     // TODO: also check the MBR is as for a new node
     if (nodeId == rootNodeId && size() == 0) {
       if (n.level != 1) {
-        log.error("Error: tree is empty but root node is not at level 1");
+        //log.error("Error: tree is empty but root node is not at level 1");
         return false;
       }
     }
 
     if (n.level != expectedLevel) {
-      log.error("Error: Node " + nodeId + ", expected level " + expectedLevel + ", actual level " + n.level);
+      //log.error("Error: Node " + nodeId + ", expected level " + expectedLevel + ", actual level " + n.level);
       return false;
     }
 
@@ -1191,28 +1141,28 @@ public class RTree implements SpatialIndex, Serializable {
     actualMBR.maxX = n.mbrMaxX;
     actualMBR.maxY = n.mbrMaxY;
     if (!actualMBR.equals(calculatedMBR)) {
-      log.error("Error: Node " + nodeId + ", calculated MBR does not equal stored MBR");
-      if (actualMBR.minX != n.mbrMinX) log.error("  actualMinX=" + actualMBR.minX + ", calc=" + calculatedMBR.minX);
-      if (actualMBR.minY != n.mbrMinY) log.error("  actualMinY=" + actualMBR.minY + ", calc=" + calculatedMBR.minY);
-      if (actualMBR.maxX != n.mbrMaxX) log.error("  actualMaxX=" + actualMBR.maxX + ", calc=" + calculatedMBR.maxX);
-      if (actualMBR.maxY != n.mbrMaxY) log.error("  actualMaxY=" + actualMBR.maxY + ", calc=" + calculatedMBR.maxY);
+      //log.error("Error: Node " + nodeId + ", calculated MBR does not equal stored MBR");
+      //if (actualMBR.minX != n.mbrMinX) log.error("  actualMinX=" + actualMBR.minX + ", calc=" + calculatedMBR.minX);
+      //if (actualMBR.minY != n.mbrMinY) log.error("  actualMinY=" + actualMBR.minY + ", calc=" + calculatedMBR.minY);
+      //if (actualMBR.maxX != n.mbrMaxX) log.error("  actualMaxX=" + actualMBR.maxX + ", calc=" + calculatedMBR.maxX);
+      //if (actualMBR.maxY != n.mbrMaxY) log.error("  actualMaxY=" + actualMBR.maxY + ", calc=" + calculatedMBR.maxY);
       return false;
     }
 
     if (expectedMBR != null && !actualMBR.equals(expectedMBR)) {
-      log.error("Error: Node " + nodeId + ", expected MBR (from parent) does not equal stored MBR");
+      //log.error("Error: Node " + nodeId + ", expected MBR (from parent) does not equal stored MBR");
       return false;
     }
 
     // Check for corruption where a parent entry is the same object as the child MBR
     if (expectedMBR != null && actualMBR.sameObject(expectedMBR)) {
-      log.error("Error: Node " + nodeId + " MBR using same rectangle object as parent's entry");
+      //log.error("Error: Node " + nodeId + " MBR using same rectangle object as parent's entry");
       return false;
     }
 
     for (int i = 0; i < n.entryCount; i++) {
       if (n.ids[i] == -1) {
-        log.error("Error: Node " + nodeId + ", Entry " + i + " is null");
+        //log.error("Error: Node " + nodeId + ", Entry " + i + " is null");
         return false;
       }
 

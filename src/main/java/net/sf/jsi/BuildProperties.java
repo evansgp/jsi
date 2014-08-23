@@ -21,15 +21,11 @@ package net.sf.jsi;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Allows build properties to be retrieved at runtime. Currently, version and
  * scmRevisionId are implemented.
  */
 public class BuildProperties {
-  private static final Logger log = LoggerFactory.getLogger(BuildProperties.class);  
   private static final BuildProperties instance = new BuildProperties();
   
   private String version = null;
@@ -42,7 +38,7 @@ public class BuildProperties {
       version = p.getProperty("version", "");
       scmRevisionId = p.getProperty("scmRevisionId", "");
     } catch (IOException e) {
-      log.warn("Unable to read from build.properties");
+      //log.warn("Unable to read from build.properties");
     }
   }
   

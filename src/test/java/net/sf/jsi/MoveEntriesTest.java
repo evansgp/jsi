@@ -21,7 +21,6 @@ package net.sf.jsi;
 import java.util.Properties;
 import java.util.Random;
 
-import net.sf.jsi.Rectangle;
 import net.sf.jsi.rtree.RTree;
 
 import junit.framework.TestCase;

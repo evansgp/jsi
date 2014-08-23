@@ -30,8 +30,6 @@ import net.sf.jsi.rtree.RTree;
 import gnu.trove.procedure.TIntProcedure;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * PerformanceTest
@@ -46,7 +44,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PerformanceTest {
 
-  private static final Logger log = LoggerFactory.getLogger(PerformanceTest.class);
   private SpatialIndex si;
 
   private float randomFloat(Random r, float min, float max) {
@@ -97,9 +94,6 @@ public class PerformanceTest {
     for (int j = 0; j < repetitions; j++) o.execute(si, o.r);
     duration += (System.nanoTime() - startTime);
 
-    log.info(o.getDescription() + ", " +
-            "avg callbacks = " + ((float) o.callbackCount() / repetitions) + ", " +
-            "avg time = " + (duration / repetitions) + " ns");
   }
 
   /**
@@ -130,7 +124,6 @@ public class PerformanceTest {
         si.add(rects[i], i);
       }
       duration += (System.nanoTime() - startTime);
-      log.info("add " + rectangleCount + " avg tme = " + (duration / rectangleCount) + " ns");
 
       if (j == 4) break; // don't do the delete on the last iteration
 
@@ -140,7 +133,6 @@ public class PerformanceTest {
         si.delete(rects[i], i);
       }
       duration += (System.nanoTime() - startTime);
-      log.info("delete " + rectangleCount + " avg tme = " + (duration / rectangleCount) + " ns");
     }
 
     ExecutorService exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
