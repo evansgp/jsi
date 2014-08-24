@@ -28,7 +28,6 @@ import gnu.trove.stack.array.TIntArrayStack;
 import java.io.Serializable;
 import java.util.Properties;
 
-import net.sf.jsi.BuildProperties;
 import net.sf.jsi.Point;
 import net.sf.jsi.Rectangle;
 import net.sf.jsi.PriorityQueue;
@@ -524,12 +523,6 @@ public class RTree implements SpatialIndex, Serializable {
     return bounds;
   }
 
-  /**
-   * @see net.sf.jsi.SpatialIndex#getVersion()
-   */
-  public String getVersion() {
-    return "RTree-" + BuildProperties.getVersion();
-  }
   //-------------------------------------------------------------------------
   // end of SpatialIndex methods
   //-------------------------------------------------------------------------

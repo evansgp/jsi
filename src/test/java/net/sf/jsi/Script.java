@@ -143,7 +143,7 @@ public class Script {
 
     String outputFilename = null;
     if (testType == REFERENCE_COMPARISON) {
-      outputFilename = strTestResultsRoot + "-" + si.getVersion() +
+      outputFilename = strTestResultsRoot +
       	"-" + new SimpleDateFormat("yyMMddHHmmss").format(new Date());
     } else {
       outputFilename = strTestResultsRoot + "-reference";

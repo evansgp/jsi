@@ -15,6 +15,7 @@ I intend to make the following changes:
 Fanciful ideas are to:  
 * Implement multiple dimensions  
 * Get hired by a technology company  
+* Consider serialisation  
 
 The following have been implemented so far:  
 * Separate unit tests from performance tests  
