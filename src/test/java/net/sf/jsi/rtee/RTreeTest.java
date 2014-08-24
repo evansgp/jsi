@@ -29,11 +29,11 @@ public class RTreeTest {
             rects[i] = randomRectangle();
         }
 
-        run(1, 2, rects);
-        run(1, 3, rects);
-        run(2, 4, rects);
-        run(2, 5, rects);
-        run(2, 6, rects);
+        testDeleteAllEntries(1, 2, rects);
+        testDeleteAllEntries(1, 3, rects);
+        testDeleteAllEntries(2, 4, rects);
+        testDeleteAllEntries(2, 5, rects);
+        testDeleteAllEntries(2, 6, rects);
     }
 
     @Test
@@ -147,7 +147,7 @@ public class RTreeTest {
         return new Rectangle(r.nextInt(100), r.nextInt(100), r.nextInt(100), r.nextInt(100));
     }
 
-    private void run(int minNodeEntries, int maxNodeEntries, Rectangle[] rects) {
+    private void testDeleteAllEntries(int minNodeEntries, int maxNodeEntries, Rectangle[] rects) {
         Properties p = new Properties();
         p.setProperty("MinNodeEntries", Integer.toString(minNodeEntries));
         p.setProperty("MaxNodeEntries", Integer.toString(maxNodeEntries));
