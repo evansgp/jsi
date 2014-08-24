@@ -9,12 +9,12 @@
 
   <name>jsi</name>
   <description>Java Spatial Index library</description>
-  <url>http://www.sourceforge.net/projects/jsi</url>
+  <url>https://github.com/evansgp/jsi</url>
 
   <licenses>
     <license>
       <name>The GNU Lesser General Public License, Version 2.1 or later</name>
-        <url>http://www.gnu.org/licenses/lgpl-2.1.txt</url>
+      <url>http://www.gnu.org/licenses/lgpl-2.1.txt</url>
     </license>
   </licenses>
 
@@ -22,7 +22,7 @@
     <developer>
       <name>Gareth Evans</name>
       <email>evans.g.p@gmail.com</email>
-      <url>http://github.com/evansgp/jsi</url>
+      <url>http://gareth.id.au</url>
     </developer>
     <developer>
       <name>Aled Morris</name>
@@ -45,13 +45,6 @@
   </reporting>
 
   <build>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
-
     <pluginManagement>
       <plugins>
         <plugin>
@@ -98,22 +91,33 @@
 
   </build>
 
-  <dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>net.sf.trove4j</groupId>
+        <artifactId>trove4j</artifactId>
+        <version>3.0.3</version>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.11</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
+  <dependencies>
     <dependency>
       <groupId>net.sf.trove4j</groupId>
       <artifactId>trove4j</artifactId>
-      <version>3.0.3</version>
-      <scope>compile</scope>
     </dependency>
 
+    <!-- Test dependencies -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
 
 
