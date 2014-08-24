@@ -70,20 +70,18 @@ import gnu.trove.list.array.TFloatArrayList;
  */
 public class PriorityQueue implements Serializable {
   private static final long serialVersionUID = -5653506138757217673L;
-  public static final boolean SORT_ORDER_ASCENDING = true;
-  public static final boolean SORT_ORDER_DESCENDING = false;
 
   private TIntArrayList values = null;
   private TFloatArrayList priorities = null;
-  private boolean sortOrder = SORT_ORDER_ASCENDING;
+  private SortOrder sortOrder = SortOrder.Ascending;
 
   private static boolean INTERNAL_CONSISTENCY_CHECKING = false;
 
-  public PriorityQueue(boolean sortOrder) {
+  public PriorityQueue(SortOrder sortOrder) {
     this(sortOrder, 10);
   }
 
-  public PriorityQueue(boolean sortOrder, int initialCapacity) {
+  public PriorityQueue(SortOrder sortOrder, int initialCapacity) {
     this.sortOrder = sortOrder;
     values = new TIntArrayList(initialCapacity);
     priorities = new TFloatArrayList(initialCapacity);
@@ -95,7 +93,7 @@ public class PriorityQueue implements Serializable {
    * @return true if p1 has an earlier sort order than p2.
    */
   private boolean sortsEarlierThan(float p1, float p2) {
-    if (sortOrder == SORT_ORDER_ASCENDING) {
+    if (sortOrder == SortOrder.Ascending) {
       return p1 < p2;
     }
     return p2 < p1;
@@ -214,7 +212,7 @@ public class PriorityQueue implements Serializable {
     return ret;
   }
 
-  public void setSortOrder(boolean sortOrder) {
+  public void setSortOrder(SortOrder sortOrder) {
     if (this.sortOrder != sortOrder) {
       this.sortOrder = sortOrder;
       // reheapify the arrays
@@ -252,4 +250,9 @@ public class PriorityQueue implements Serializable {
       }
     }
   }
+
+    public enum SortOrder {
+        Ascending,
+        Descending,
+    }
 }

@@ -413,7 +413,7 @@ public class RTree implements SpatialIndex, Serializable {
     //
     // Note that more than N items will be returned if items N and N+x have the
     // same priority.
-    PriorityQueue distanceQueue = new PriorityQueue(PriorityQueue.SORT_ORDER_DESCENDING);
+    PriorityQueue distanceQueue = new PriorityQueue(PriorityQueue.SortOrder.Descending);
     createNearestNDistanceQueue(p, count, distanceQueue, furthestDistance);
 
     while (distanceQueue.size() > 0) {
@@ -426,9 +426,9 @@ public class RTree implements SpatialIndex, Serializable {
    * @see net.sf.jsi.SpatialIndex#nearestN(Point, TIntProcedure, int, float)
    */
   public void nearestN(Point p, TIntProcedure v, int count, float furthestDistance) {
-    PriorityQueue distanceQueue = new PriorityQueue(PriorityQueue.SORT_ORDER_DESCENDING);
+    PriorityQueue distanceQueue = new PriorityQueue(PriorityQueue.SortOrder.Descending);
     createNearestNDistanceQueue(p, count, distanceQueue, furthestDistance);
-    distanceQueue.setSortOrder(PriorityQueue.SORT_ORDER_ASCENDING);
+    distanceQueue.setSortOrder(PriorityQueue.SortOrder.Ascending);
 
     while (distanceQueue.size() > 0) {
       v.execute(distanceQueue.getValue());
