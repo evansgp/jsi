@@ -1,4 +1,4 @@
-package net.sf.jsi;
+package net.sf.jsi.rtee;
 
 import junit.framework.TestCase;
 
