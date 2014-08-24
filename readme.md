@@ -26,4 +26,4 @@ such as myself.
 
 Build Status
 ------------
-[![Build Status](https://api.travis-ci.org/evansgp/jsi.png)](https://api.travis-ci.org/evansgp/jsi)
+[![Build Status](https://api.travis-ci.org/evansgp/jsi.png)](https://travis-ci.org/evansgp/jsi)
