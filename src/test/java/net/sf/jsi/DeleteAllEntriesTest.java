@@ -25,6 +25,8 @@ import java.util.Random;
 
 import junit.framework.TestCase;
 
+import net.sf.jsi.geometry.Point;
+import net.sf.jsi.geometry.Rectangle;
 import net.sf.jsi.rtree.RTree;
 
 public class DeleteAllEntriesTest extends TestCase {

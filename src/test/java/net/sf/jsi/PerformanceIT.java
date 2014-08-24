@@ -26,6 +26,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import net.sf.jsi.geometry.Point;
+import net.sf.jsi.geometry.Rectangle;
 import net.sf.jsi.rtree.RTree;
 import gnu.trove.procedure.TIntProcedure;
 

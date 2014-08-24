@@ -36,6 +36,8 @@ import java.util.Random;
 import java.util.StringTokenizer;
 
 import junit.framework.TestCase;
+import net.sf.jsi.geometry.Point;
+import net.sf.jsi.geometry.Rectangle;
 
 /**
  * Script

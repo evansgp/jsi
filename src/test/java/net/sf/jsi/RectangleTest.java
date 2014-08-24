@@ -20,7 +20,7 @@ package net.sf.jsi;
 
 import junit.framework.TestCase;
 
-import net.sf.jsi.Rectangle;
+import net.sf.jsi.geometry.Rectangle;
 
 /**
  * RectangleTest

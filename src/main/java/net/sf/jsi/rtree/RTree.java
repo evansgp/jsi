@@ -28,9 +28,9 @@ import gnu.trove.stack.array.TIntArrayStack;
 import java.io.Serializable;
 import java.util.Properties;
 
-import net.sf.jsi.Point;
-import net.sf.jsi.Rectangle;
-import net.sf.jsi.PriorityQueue;
+import net.sf.jsi.geometry.Point;
+import net.sf.jsi.geometry.Rectangle;
+import net.sf.jsi.util.PriorityQueue;
 import net.sf.jsi.SpatialIndex;
 
 /**

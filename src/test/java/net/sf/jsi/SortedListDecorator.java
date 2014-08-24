@@ -21,9 +21,8 @@ package net.sf.jsi;
 import java.util.Collections;
 import java.util.List;
 
-import net.sf.jsi.Point;
-import net.sf.jsi.Rectangle;
-import net.sf.jsi.SpatialIndex;
+import net.sf.jsi.geometry.Point;
+import net.sf.jsi.geometry.Rectangle;
 
 /**
  * SortedListDecorator

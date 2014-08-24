@@ -19,6 +19,8 @@
 package net.sf.jsi;
 
 import gnu.trove.procedure.TIntProcedure;
+import net.sf.jsi.geometry.Point;
+import net.sf.jsi.geometry.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
