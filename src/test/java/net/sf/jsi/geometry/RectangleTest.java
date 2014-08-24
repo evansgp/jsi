@@ -18,28 +18,18 @@
 
 package net.sf.jsi.geometry;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-import net.sf.jsi.geometry.Rectangle;
+import static org.junit.Assert.assertTrue;
 
 /**
  * RectangleTest
  */
-public class RectangleTest extends TestCase {
-  public RectangleTest(String s) {
-    super(s); 
-  }
-  
-  public void testContains() {
-    
-  }
-  
-  public void testDistance() {
-    
-  }
-  
-  public void testIntersects() {
-    Rectangle r0_0_0_0 = new Rectangle (0, 0, 0, 0);
+public class RectangleTest {
+
+    @Test
+    public void testIntersects() {
+        Rectangle r0_0_0_0 = new Rectangle (0, 0, 0, 0);
     Rectangle r1_1_1_1 = new Rectangle (1, 1, 1, 1);
     Rectangle r2_2_6_6 = new Rectangle (2, 2, 6, 6);
     Rectangle r3_3_7_5 = new Rectangle (3, 3, 7, 5);
@@ -74,4 +64,6 @@ public class RectangleTest extends TestCase {
     assertTrue(r3_1_5_5.intersects(r2_2_6_6));
     
   }
+
+
 }
