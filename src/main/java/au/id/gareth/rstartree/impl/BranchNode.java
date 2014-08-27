@@ -2,11 +2,32 @@ package au.id.gareth.rstartree.impl;
 
 import au.id.gareth.rstartree.geometry.Rectangle;
 
-public class BranchNode<T extends Comparable> extends Node<T> {
+import java.util.ArrayList;
+import java.util.List;
 
-  private Node<T> children;
+public class BranchNode<U extends Comparable, T> extends Node<U, T> {
 
-  public BranchNode(Rectangle boundingBox) {
+  private final List<Node<U, T>> children = new ArrayList<>();
+  private final Integer minNodes;
+  private final Integer maxNodes;
+
+  public BranchNode(Rectangle<U> boundingBox, Integer minNodes, Integer maxNodes) {
     super(boundingBox);
+    if( minNodes > maxNodes / 2 ) {
+      throw new IllegalArgumentException("minNodes in greater than half maxNodes");
+    }
+    this.minNodes = minNodes;
+    this.maxNodes = maxNodes;
   }
+
+  @Override
+  public List<LeafNode<U, T>> findLeaves(Rectangle<U> bounds) {
+
+    for(Node<U, T> child : children) {
+      //if(child.getBoundingBox())
+    }
+
+    return null;
+  }
+
 }

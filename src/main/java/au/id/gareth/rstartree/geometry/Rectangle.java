@@ -1,19 +1,29 @@
 package au.id.gareth.rstartree.geometry;
 
-public class Rectangle<T extends Comparable> {
+import java.util.Arrays;
+import java.util.Iterator;
 
-  //TODO: List/Collection? Immutability?
-  private final Interval<T>[] intervals;
+public class Rectangle<U extends Comparable> extends Dimensional<Interval<U>> {
 
-  public Rectangle(Interval<T>...intervals) {
-    if(intervals == null || intervals.length == 0) {
-      throw new IllegalArgumentException("Intervals must be supplied");
-    }
-    this.intervals = intervals;
+  public Rectangle(Interval<U>...intervals) {
+    super(intervals);
   }
 
-  public Interval<T>[] getIntervals() {
-    return this.intervals;
+  public Interval<U>[] getIntervals() {
+    return this.values;
+  }
+
+  public Boolean overlaps(Rectangle<U> rectangle) {
+    if(!this.hasDimensionsOf(rectangle)) {
+      throw new IllegalArgumentException("Dimensions of rectangles differ");
+    }
+    Iterator<Interval<U>> iterator = Arrays.asList(this.values).iterator();
+    for(Interval interval : rectangle.getIntervals()) {
+      if(!interval.overlaps(iterator.next())) {
+        return Boolean.FALSE;
+      }
+    }
+    return Boolean.TRUE;
   }
 
 }

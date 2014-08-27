@@ -3,12 +3,12 @@ package au.id.gareth.rstartree.geometry;
 /**
  * A closed bounded interval along a dimension.
  */
-public class Interval<T extends Comparable> {
+public class Interval<U extends Comparable> {
 
-  private final T min;
-  private final T max;
+  private final U min;
+  private final U max;
 
-  public Interval(T min, T max) {
+  public Interval(U min, U max) {
     if(min == null || max == null) {
       throw new IllegalArgumentException("Both min ("+min+") and max ("+max+") must be supplied");
     }
@@ -19,11 +19,20 @@ public class Interval<T extends Comparable> {
     this.max = max;
   }
 
-  public T getMax() {
+  public U getMax() {
     return max;
   }
 
-  public T getMin() {
+  public U getMin() {
     return min;
+  }
+
+  public Boolean overlaps(Interval<U> interval) {
+    if(interval.getMax().compareTo(this.getMin()) >= 0
+        && interval.getMin().compareTo(this.getMax()) <= 0) {
+      return Boolean.TRUE;
+    } else {
+      return Boolean.FALSE;
+    }
   }
 }

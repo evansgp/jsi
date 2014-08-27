@@ -2,9 +2,11 @@ package au.id.gareth.rstartree.impl;
 
 import au.id.gareth.rstartree.geometry.Rectangle;
 
-public class Node<T extends Comparable> {
+import java.util.List;
 
-  protected Rectangle<T> boundingBox;
+public abstract class Node<U extends Comparable, T> {
+
+  protected Rectangle<U> boundingBox;
 
   public Node(Rectangle boundingBox) {
     if(boundingBox == null) {
@@ -13,7 +15,10 @@ public class Node<T extends Comparable> {
     this.boundingBox = boundingBox;
   }
 
-  public Rectangle<T> getBoundingBox() {
+  public Rectangle<U> getBoundingBox() {
     return boundingBox;
   }
+
+  //Algorithm "Search"
+  public abstract List<LeafNode<U, T>> findLeaves(Rectangle<U> bounds);
 }

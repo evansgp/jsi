@@ -44,4 +44,20 @@ public class IntervalTest {
   public void testNullMax() {
     Interval<Integer> interval = new Interval<>(10, null);
   }
+
+  @Test
+  public void testOverlaps() {
+    assertThat(interval.overlaps(new Interval<>(0,10)), is(Boolean.TRUE));
+    assertThat(interval.overlaps(new Interval<>(0,11)), is(Boolean.TRUE));
+    assertThat(interval.overlaps(new Interval<>(-1,10)), is(Boolean.TRUE));
+
+    assertThat(interval.overlaps(new Interval<>(-1,0)), is(Boolean.TRUE));
+    assertThat(interval.overlaps(new Interval<>(10,11)), is(Boolean.TRUE));
+
+    assertThat(interval.overlaps(new Interval<>(5,6)), is(Boolean.TRUE));
+
+    assertThat(interval.overlaps(new Interval<>(-2,-1)), is(Boolean.FALSE));
+    assertThat(interval.overlaps(new Interval<>(11,12)), is(Boolean.FALSE));
+  }
+
 }

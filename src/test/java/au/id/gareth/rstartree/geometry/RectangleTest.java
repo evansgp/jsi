@@ -29,4 +29,26 @@ public class RectangleTest {
     assertThat(rectangle.getIntervals()[1].getMax(), is(69));
   }
 
+  @Test
+  public void testOverlaps() {
+    Rectangle<Integer> rectangle = new Rectangle<>(new Interval<>(-10,10), new Interval<>(-10,10));
+
+    //equal, half and double scaled rectangle
+    assertThat(rectangle.overlaps(new Rectangle<>(new Interval<>(-10, 10), new Interval<>(-10,10))), is(Boolean.TRUE));
+    assertThat(rectangle.overlaps(new Rectangle<>(new Interval<>(-5, 5), new Interval<>(-5,5))), is(Boolean.TRUE));
+    assertThat(rectangle.overlaps(new Rectangle<>(new Interval<>(-20, 20), new Interval<>(-20,20))), is(Boolean.TRUE));
+
+    //exactly adjacent on each edge
+    assertThat(rectangle.overlaps(new Rectangle<>(new Interval<>(-30, -10), new Interval<>(-10,10))), is(Boolean.TRUE));
+    assertThat(rectangle.overlaps(new Rectangle<>(new Interval<>(-10, 10), new Interval<>(-30,-10))), is(Boolean.TRUE));
+    assertThat(rectangle.overlaps(new Rectangle<>(new Interval<>(10, 30), new Interval<>(-10,10))), is(Boolean.TRUE));
+    assertThat(rectangle.overlaps(new Rectangle<>(new Interval<>(-10, 10), new Interval<>(10,30))), is(Boolean.TRUE));
+
+    //next smallest increment away on each edge
+    assertThat(rectangle.overlaps(new Rectangle<>(new Interval<>(-31, -11), new Interval<>(-10,10))), is(Boolean.FALSE));
+    assertThat(rectangle.overlaps(new Rectangle<>(new Interval<>(-10, 10), new Interval<>(-31,-11))), is(Boolean.FALSE));
+    assertThat(rectangle.overlaps(new Rectangle<>(new Interval<>(11, 31), new Interval<>(-10,10))), is(Boolean.FALSE));
+    assertThat(rectangle.overlaps(new Rectangle<>(new Interval<>(-10, 10), new Interval<>(11,31))), is(Boolean.FALSE));
+  }
+
 }
